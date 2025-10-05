@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard | Expense Tracker</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <div class="nav">
+    <a href="{{ url_for('add_expense') }}">Add Expense</a>
+    <a href="{{ url_for('categories') }}">Categories</a>
+    <a href="{{ url_for('summary') }}">Summary</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+  </div>
+
+  <div class="container">
+    <h2>Welcome, {{ session['username'] }}!</h2>
+    <h3>Your Expenses</h3>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="flash">{{ messages[0] }}</div>
+      {% endif %}
+    {% endwith %}
+
+    <table>
+      <tr>
+        <th>Date</th>
+        <th>Category</th>
+        <th>Description</th>
+        <th>Amount</th>
+        <th>Actions</th>
+      </tr>
+      {% for exp in expenses %}
+      <tr>
+        <td>{{ exp['date'] }}</td>
+        <td>{{ exp['category'] or 'Uncategorized' }}</td>
+        <td>{{ exp['description'] }}</td>
+        <td>₹{{ exp['amount'] }}</td>
+        <td>
+          <a href="{{ url_for('update_expense', id=exp['id']) }}">Edit</a> |
+          <a href="{{ url_for('delete_expense', id=exp['id']) }}" onclick="return confirm('Delete this expense?');">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</body>
+</html>

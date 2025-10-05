@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Summary | Expense Tracker</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <div class="nav">
+    <a href="{{ url_for('index') }}">Home</a>
+    <a href="{{ url_for('add_expense') }}">Add Expense</a>
+    <a href="{{ url_for('categories') }}">Categories</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+  </div>
+
+  <div class="container">
+    <h2>Expense Summary</h2>
+    <table>
+      <tr>
+        <th>Category</th>
+        <th>Total (₹)</th>
+      </tr>
+      {% for row in summary %}
+      <tr>
+        <td>{{ row['category'] or 'Uncategorized' }}</td>
+        <td>₹{{ row['total'] or 0 }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</body>
+</html>

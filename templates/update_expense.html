@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Update Expense | Expense Tracker</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <div class="nav">
+    <a href="{{ url_for('index') }}">Home</a>
+    <a href="{{ url_for('categories') }}">Categories</a>
+    <a href="{{ url_for('summary') }}">Summary</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+  </div>
+
+  <div class="container">
+    <h2>Update Expense</h2>
+    <form method="POST">
+      <label>Amount (₹):</label>
+      <input type="number" name="amount" value="{{ expense['amount'] }}" step="0.01" required>
+
+      <label>Category:</label>
+      <select name="category" required>
+        {% for c in categories %}
+        <option value="{{ c['id'] }}" {% if c['id'] == expense['category_id'] %}selected{% endif %}>{{ c['name'] }}</option>
+        {% endfor %}
+      </select>
+
+      <label>Description:</label>
+      <input type="text" name="description" value="{{ expense['description'] }}">
+
+      <label>Date:</label>
+      <input type="date" name="date" value="{{ expense['date'] }}" required>
+
+      <button type="submit">Update</button>
+    </form>
+  </div>
+</body>
+</html>
